@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    Grad:
+    <select id="Gradovi">
+        <option value="Mostar">Mostar</option>
+        <option value="Sarajevo">Sarajevo</option>
+    </select>
+    <button id="button" onclick="pronadi()">Pronadi</button>
+    <p id="demo">Trenutna temepratura je : </p>
+    <script>
+        function getPoziv(mojURL, pokfunkcija){
+            var zahtjev = new XMLHttpRequest();
+            zahtjev.onload =  function(){
+                if(zahtjev.status == 200){
+                    pokfunkcija(zahtjev.responseText);
+                }
+                else {
+                     alert("Server javlja grešku: " + zahtjev.statusText);
+                }
+            }
+            zahtjev.onerror = function(){
+                alert("Server javlja grešku: " + zahtjev.statusText);
+            }
+            zahtjev.open("GET", mojURL, true);
+            zahtjev.send(null);
+        }        
+        function pronadi(){
+            var grad = document.getElementById("Gradovi").value;
+            var mojURL = "http://api.openweathermap.org/data/2.5/weather?q=" + grad + "&appid=917b026a997320574cd4315b9bf4c73a";
+            getPoziv(mojURL, function(x){
+                var n = JSON.parse(x);
+                document.getElementById("demo").innerHTML += n.main.temp -273.5;
+            })
+        }
+    </script>
+</body>
+</html>

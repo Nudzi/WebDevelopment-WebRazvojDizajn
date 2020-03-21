@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    </style>
+</head>
+
+<body>
+    lat
+    <input id="latText" /><br>
+    Lon
+    <input id="lonText" /><br>
+    <button onclick="btnLokacija()">Uzmi lokaciju</button>
+    <button onclick="btnVrijeme()">Provjeri vrijeme</button>
+
+</body>
+<script>
+    function btnLokacija() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(rezultat, showError);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+    function showError(error){
+        if(error.PERMISSION_DENIED){
+            var urlAdresa = 'http://ip-api.com/json';
+        pozivGet(urlAdresa, function (x) {
+            var r = JSON.parse(x);
+            var t = r.query;
+            alert("Vasa ip adresa " + t);
+            document.getElementById("latText").value = r.lat;
+            document.getElementById("lonText").value = r.lon;
+        });
+        }
+    }
+    function rezultat(p)
+    { 
+        document.getElementById("latText").value = p.coords.latitude;
+        document.getElementById("lonText").value = p.coords.longitude;
+    }
+    function btnVrijeme() {
+        var lat = document.getElementById("latText").value;
+        var lon = document.getElementById("lonText").value;
+        var urlAdresa = 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=917b026a997320574cd4315b9bf4c73a';
+        //Primjer rada.
+        pozivGet(urlAdresa, function (x) {
+            var r = JSON.parse(x);
+            var t = r["main"]["temp"] - 273.15;
+            alert(t);
+        });
+    }
+
+    function pozivGet(theUrl, callback) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                callback(xmlHttp.responseText);
+        }
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+        xmlHttp.send(null);
+    }
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html> <html lang="en"> 
+        <head>
+                <meta charset="UTF-8">
+                
+                <title>Document</title>
+            
+                <link rel="stylesheet" type="text/css" href="stil - Copy.css">
+                <script src = "jquery-ui.js"></script>
+                <link rel="stylesheet"  href="jquery-ui.css">
+            </head>
+    <body> 
+            <div class="lijevi">
+                    <div class="lijeviGornji">
+                    <label >Ime</label>
+                    <!-- <input id="ime" name="ime" type="text" oninput="ucitaj()"> -->
+                    <input id="ime" name="ime" type="text">
+                    <label >Adresa</label>
+                    <input  id="adresa" name="adresa" type="text">
+                    <label >Grad</label>
+                    <input id="grad" name="grad"type="text">
+                    <label >Telefon</label>
+                    <input id="telefon" name="telefon" type="text">
+                    <label >ID Proizvoda</label>
+                    <input  id="id" name="id" type="text">
+                    <label >Kolicina</label>
+                    <input id="kolicina" name="kolicina" type="text">
+                    <button type="sum" style="width: 50%; height: 50px"  onclick="naruci()">Naruci</button>
+                    <button type="sum" style="width: 50%; height: 50px; float:left"  onclick="dodajAccordion()">Snimi</button>
+                </div>
+                <div class="lijeviDonji">
+                        <table id="tabelaID" border="1px" style="width: 100%">
+                                <tdead>
+                                    <tr>
+                                            <th>Proizvod ID</th>
+                                            <th>Naziv</th>
+                                            <th>Cijena</th>
+                                            <th>Jedinica mjere</th>
+                                            <th>Like counter</th>
+                                            <th>Like</th>
+                                            <th>Odaberi</th>
+                                    </tr>
+                                  </tdead>
+                                  <tbody>
+                                   
+                                  </tbody>
+                            </table>
+                </div>
+                </div>
+                <div class="desni">
+                    <div class="desniGornji">
+                        <!-- <img src="wrd-1.png" style="width: 100%; height:100%; position:absolute; opacity:0.1;">  -->
+                        <nav>
+                        <div id="mine"><p>**</p><span>BROJ INDEKSA</span></div>
+                            
+                        </nav>
+                        <div id="accordion">
+            
+                        </div>
+                    </div>
+                    <div class="desniDonji">
+                            <table id="tabelaID2" border="1px" style="width: 100%">
+                                    <tdead>
+                                        <tr>
+                                                <th>ID</th>
+                                                <th>Naziv</th>
+                                                <th>Cijena</th>
+                                                <th>Kolicina</th>
+                                                <th>Dostava ime</th>
+                                                <th>Dostava adresa</th>
+                                                <th>Dostava telefon</th>
+                                        </tr>
+                                      </tdead>
+                                      <tbody>
+                                       
+                                      </tbody>
+                                </table>
+                                <p id="footer">FIT Mostar
+                                        IBxxxxxx
+                                    </p>
+                    </div>
+                    
+                </div>
+            
+         </body>
+         <script src="external/jquery/jquery.js"></script>
+
+    <script src="https://wrd.app.fit.ba/2018-19/fit-messagebox.js"></script>
+    <script src="jquery-validation-1.16.0\dist\jquery.validate.js"></script>
+    <script type="text/javascript" src="skripta.js"></script>
+
+    <!-- <script>
+        function filter(){
+            downloadUspjesno();
+        }
+        function filter2(){
+            downloadUspjesno();
+        }
+        
+        function brisanje(id){
+            var mojUrl = 'http://dummy.restapiexample.com/api/v1/delete/' + id; 
+             var x  = new XMLHttpRequest(); 
+             x.onload = function(){
+                 if(x.status == 200){
+                 var m = x.responseText;
+                 var r = JSON.parse(m);
+                 doucment.getElementById("red-" + id).remove();
+                 }
+                 else{
+                     alert("Greska");
+                 }
+             }; 
+             x.onerror = downloadGreska;
+             x.open("DELETE", mojUrl, true);
+             x.send(null);
+
+        }
+        var posljednjeDodan = 0;
+        function novi(){
+            var z = new Object();
+            z.name = document.getElementById("ime2").value;
+            z.salary = document.getElementById("plata").value;
+            z.age = document.getElementById("starost").value;
+            var strJson = JSON.stringify(z);
+            var mojUrl = 'http://dummy.restapiexample.com/api/v1/create'; 
+            zahtjev = new XMLHttpRequest(); 
+            zahtjev.onload = function(){
+                 if (zahtjev.status === 200){ 
+                     var x = zahtjev.responseText;
+                     var n = JSON.parse(x); 
+                     posljednjeDodan = n.id;
+                     btnDownloadSve();
+                     }
+                else{
+                     alert("Greska");
+                     }
+                }
+                zahtjev.onerror = downloadGreska;
+             zahtjev.open("POST", mojUrl, true);
+             zahtjev.send(strJson);
+
+        }
+
+        function dodaj(){
+            var idd = document.getElementById("id").value;
+
+            var z = new Object();
+            z.name = document.getElementById("ime2").value;
+            z.salary = document.getElementById("plata").value;
+            z.age = Number(document.getElementById("starost").value) + Number(1); 
+            var strJson = JSON.stringify(z);
+            var mojUrl = 'http://dummy.restapiexample.com/api/v1/update/' + idd; 
+            zahtjev = new XMLHttpRequest(); 
+            zahtjev.onload = function(){
+                 if (zahtjev.status === 200){ 
+                     var x = zahtjev.responseText;
+                     var n = JSON.parse(x); 
+                     alert(n.employee_age);
+                     porukaSuccess("Uspjeh");
+                     btnDownloadSve();
+                     }
+                else{
+                     alert("Greska");
+                     }
+                }
+                zahtjev.onerror = downloadGreska;
+             zahtjev.open("PUT", mojUrl, true);
+             zahtjev.send(strJson);
+
+        }
+        function detalji(id){
+            var mojUrl = 'http://dummy.restapiexample.com/api/v1/employee/' + id; 
+             zahtjev = new XMLHttpRequest(); 
+             zahtjev.onload = function(){
+                 if (zahtjev.status === 200)
+                     { var x = zahtjev.responseText;
+                     var n = JSON.parse(x); 
+                     document.getElementById("id").value = n.id;
+                     document.getElementById("plata").value = n.employee_salary;
+                     document.getElementById("starost").value = n.employee_age;
+                     document.getElementById("ime2").value = n.employee_name;
+                }
+             else{
+                 alert("Greska");
+                 }
+             }
+             zahtjev.onerror = downloadGreska;
+             zahtjev.open("GET", mojUrl, true);
+             zahtjev.send(null);
+
+        }
+        function lajk(id){
+            var mojUrl = 'http://dummy.restapiexample.com/api/v1/update/' + id; 
+             zahtjev = new XMLHttpRequest(); 
+             zahtjev.onload = function(){
+                 if (zahtjev.status === 200)
+                     { var x = zahtjev.responseText;
+                     var n = JSON.parse(x); 
+                     n.employee_age = Number(n.employee_age) + Number(1);
+                    alert(n.employee_age);
+                }
+             else{
+                 alert("Greska");
+                 }
+             }
+             zahtjev.onerror = downloadGreska;
+             zahtjev.open("PUT", mojUrl, true);
+             zahtjev.send(null);
+    }
+        function downloadUspjesno(){
+            document.getElementById("tabelaID").innerHTML = ""; 
+
+             if (zahtjev.status === 200)
+             { var x = zahtjev.responseText;
+              var n = JSON.parse(x); 
+              for (var i = 0; i < 5; i++)
+              { 
+                  var a = document.getElementById("godine").value;
+                  var m = document.getElementById("ime").value;
+                var r = n[i]; 
+               // if(r.employee_age == a ||  r.employee_name.startsWith(m)){
+              var noviRed = ("<tr><td>" +
+                                     r.proizvodID + "</td><td>" + r.naziv + "</td><td>" + r.cijena + "</td><td>" 
+                                + r.jedinicaMjere + "</td><td>" + r.likeCounter + "</td><td>" +
+                                "<button onclick = 'like(" + r.proizvodID + ")'>LIKE</button>" + "</td><td>" +
+                                "<button onclick = 'izaberi(" + r.proizvodID + ")'>IZABERI</button>" + "</td></tr>"
+                             ); 
+                document.getElementById("tabelaID").innerHTML += noviRed;
+                }
+           // } 
+        } else{
+             document.getElementById("upozorenjeDiv").innerHTML += "Server javlja grešku: " + zahtjev.statusText + "<br/>";
+              } 
+            }
+        function downloadGreska() 
+        { 
+        document.getElementById("upozorenjeDiv").innerHTML += "Greška u komunikaciji sa serverom."; 
+        } 
+        function btnDownloadSve()
+        {
+             var mojUrl = 'https://onlineshop.wrd.app.fit.ba/api/ispit20190829/Narudzba/GetProizvodiAll'; 
+             zahtjev = new XMLHttpRequest(); 
+             zahtjev.onload = downloadUspjesno; 
+             zahtjev.onerror = downloadGreska;
+             zahtjev.open("GET", mojUrl, true);
+             zahtjev.send(null);
+     }
+     $( "#accordion" ).accordion({
+            heightStyle: "content"
+          });
+    function dodajAccordion(){
+        var naziv = document.getElementById("ime").value;
+        var vrijednost = document.getElementById("adresa").value;
+        $("#accordion").append("<h3>"+naziv + "</h3><div>"+vrijednost+"</div>");
+        $("#accordion").accordion("refresh");
+    }
+    function ucitaj(){
+            document.getElementById("tabelaID2").innerHTML = ""; 
+
+            var mojUrl = 'https://onlineshop.wrd.app.fit.ba/api/ispit20190829/Narudzba/GetNarudzbeAll';
+            var zahtjev = new XMLHttpRequest(); 
+
+            zahtjev.onload  = function() { 
+             if (zahtjev.status === 200){
+              var x = zahtjev.responseText;
+                var n = zahtjev.responseText;
+                        var x = JSON.parse(n);
+                        for (var index = 0; index < x.length; index++) {
+                        //var  m = document.getElementById("ime").value;
+                        var r = x[index];
+                        //if(r.dostavaIme.startsWith(m)){
+                        var novired = ("<tr><td>"+
+                             r.proizvodID + "</td><td>" + r.naziv + "</td><td>" + r.cijena + "</td><td>" 
+                                    + r.kolicina + "</td><td>" + r.dostavaIme + "</td><td>" +
+                                     r.dostavaAdresa +"</td><td>" + r.dostavaTelefon +"</td></tr>"
+                            );
+                            document.getElementById("tabelaID2").innerHTML += novired;
+                       // }
+                     }
+                    }
+                    else {  
+                        alert("Server javlja grešku: " + zahtjev.statusText);  
+                    }  
+                }
+            zahtjev.onerror = function() {
+                alert("Greška u komunikaciji sa serverom.");  
+            };
+    
+            zahtjev.open("GET", mojUrl, true);
+            zahtjev.send(null);
+        }
+    ucitaj();
+     
+    function naruci(){
+            var z = new Object();
+            z.dostavaGrad = document.getElementById("grad").value;
+            z.dostavaAdresa = document.getElementById("adresa").value;
+            z.dostavaIme = document.getElementById("ime").value;
+            z.dostavaTelefon = document.getElementById("telefon").value;
+            z.proizvodID = document.getElementById("id").value;
+            z.kolicina = document.getElementById("kolicina").value;
+
+            var strJson = JSON.stringify(z);
+
+            var mojUrl = 'http://onlineshop.wrd.app.fit.ba/api/ispit20190829/Narudzba/Dodaj';
+            var zahtjev = new XMLHttpRequest(); 
+            zahtjev.onload = function(){
+                 if (zahtjev.status === 200){ 
+                     var x =  JSON.parse(zahtjev.responseText); 
+                     ucitaj();
+                     }
+                else{
+                     alert("Greska");
+                     }
+                }
+            zahtjev.onerror = function() {
+                alert("Greška u komunikaciji sa serverom.");  
+            }
+
+            zahtjev.open("POST", mojUrl, true);
+           zahtjev.setRequestHeader("Content-Type", "application/json");
+            zahtjev.send(strJson);
+        };
+     </script> -->
+    </html>

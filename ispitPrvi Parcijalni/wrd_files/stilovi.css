@@ -1,0 +1,130 @@
+*{
+    box-sizing: border-box;
+}
+span{
+    font-size: 30px;
+    color:white; 
+}
+#mm{
+    position:   absolute;
+    font-size: 30px;
+    top:70px;
+    left:20px;
+}
+nav{
+    position: fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:70%;
+    padding:2px;
+    background-color: blue;
+    margin:auto;
+}
+#wrapper{
+    position:relative;
+    margin-left:30%;
+    padding-left:4%;
+    padding-right:4%;
+}
+#Izbornik{
+    display:block;
+    padding-left: 4%;
+    padding-top: 14%;
+}
+.IzbornikStavka{
+    color:white;
+    text-decoration: none;
+    display:block;
+    padding:2%;
+    top:10px;
+}
+
+.IzbornikStavka:hover{
+    background-color: rgb(80, 80, 247);
+}
+#IzbornikDugme{
+    display: none;
+}
+h1{
+    font-size:50px;
+    text-align:center;
+}
+hr{
+    width:50px;
+    margin-left: 0px;
+}
+img{ 
+    width: 100%;
+}
+img:hover{
+    opacity: 0.8;
+    background-color: rgb(165, 162, 162);
+}
+.VilaKolonaWrapper{
+    float:left;
+    width: 33%;
+    padding:1%;
+    text-align: center;
+}
+input{
+    width:100%;
+    padding:5px;
+}
+.KolonaTextbox{
+    width:33%;
+    padding-bottom: 2%;
+    float:left;
+}
+
+.izmedju{
+    padding-bottom: 2%;
+    text-align:left;
+}
+/* form{
+    float:left;
+    padding:2%;
+} */
+.BtnSend{
+    width: 100%;
+    background-color: blue;
+    padding: 2%;
+    color:white;
+    font-weight: bold;
+}
+#Sllika{
+    margin-right: 100%;
+}
+@media  screen and (max-width:800px){
+    #IzbornikDugme{
+        display: inline-block;
+        color:white;
+        cursor:pointer;
+        padding:2%;
+    }
+    #wrapper{
+        margin:auto;
+    }
+    nav{
+        position:relative;
+        width:100%;
+        background-color: blue;
+    }
+    .VilaKolonaWrapper{
+        width:100%;
+        padding: 2%;
+    }
+    .KolonaTextbox{
+        width:100%;
+    }
+    #Izbornik{
+        padding:0;
+    }
+    #mm{
+        position:fixed;
+    font-size: 30px;
+    left:170px;
+    top:7.2%;
+    }
+    
+}

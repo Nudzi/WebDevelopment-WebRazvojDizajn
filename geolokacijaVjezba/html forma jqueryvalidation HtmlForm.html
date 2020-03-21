@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+<form id="mojaFormaID" action="https://wrdstudentformaplikacija2.azurewebsites.net/Home/StudentDodaj/">
+    Broj Indeksa:<br/>
+    <input type="text" name="BrojIndeksa" value="">
+    <br/> <br/>
+    Ime:<br/>
+    <input type="text" name="Ime" value="">
+    <br/> <br/>
+    Prezime:<br/>
+    <input type="text" name="Prezime" value="">
+    <br/> <br/>
+    Korisnicko Ime:<br/>
+    <input type="text" name="KorisnickoIme" value="undefined">
+    <br/> <br/>
+    Password:
+    <br/>
+    <input type="password" name="Lozinka" id="Lozinka" value=""> 
+    <br/> <br/>
+    Password (ponovo):
+    <br/>
+    <input type="password" name="Lozinka2"  value=""> 
+    <br/> <br/>
+    Datum rodjenja:<br/>
+    <input type="date" name="DatumRodjenja">
+    <br/> <br/>
+    Status:<br/>
+    <input type="radio" name="Status" value="Redovan">Redovan<br/>
+    <input type="radio" name="Status" value="DL">DL
+    <br/><br/>
+
+    Opcina prebivalista ID:<br/>
+    <select id="OpstinaP" name="OpstinaPrebivalistaId">
+        <option>(Odaberite opštinu)</option>
+    </select>
+    <br/> <br/>
+    Opcina rodjenja ID:<br/>
+    <select id="OpstinaR" name="OpstinaRodjenjaId">
+        <option>(Odaberite opštinu)</option>
+    </select>
+
+    <br/>
+    <br/>
+    <input type="submit" value="Submit"> <br/>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.js"></script>
+<script>
+// var url = "https://wrdstudentformaplikacija2.azurewebsites.net/Home/OpstinaGetAllJson";
+
+// $.get(url, function (n) {
+//     for (let index = 0; index < n.length; index++) {
+//         var e = n[index];
+//         document.getElementById("OpstinaP").innerHTML += "<option value='" + e.id + "'>" +e.opis +  "</option>";
+//         document.getElementById("OpstinaR").innerHTML += "<option value='" + e.id + "'>" +e.opis +  "</option>";
+//     }
+// });
+
+$.validator.addMethod(
+    "regex",
+    function(value, element, regexp) {
+        var check = false;
+        return this.optional(element) || regexp.test(value);
+    },
+    "Please check your input."
+);
+
+$("#mojaFormaID").validate({
+   rules: {
+        Ime: {
+            required: true,
+            minlength: 2
+        },
+        Lozinka: {
+					required: true,
+					minlength: 5
+				},
+        Lozinka2: {
+            required: true,
+            minlength: 5,
+            equalTo: "#Lozinka"
+        },
+        BrojIndeksa: {
+            required: true, 
+            regex: /I[B|M]\d{6}/
+        }
+   }
+ });
+
+
+</script>
+</body>
+</html>

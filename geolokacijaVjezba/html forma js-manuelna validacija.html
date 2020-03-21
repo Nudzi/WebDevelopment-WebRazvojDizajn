@@ -1,0 +1,115 @@
+<DOCTYPE <!DOCTYPE html>
+    <html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>Page Title</title>
+    </head>
+
+    <body>
+        <form action="https://wrdstudentformaplikacija2.azurewebsites.net/Home/StudentDodaj/">
+            Broj Indeksa:<br />
+            <input type="text" id="BrojIndeksa" name="BrojIndeksa" value="" 
+            oninput="ProvjeraBrojIndeksa()">
+            <span id="BrojIndeksaMessage" style="color:red"></span>
+            <br /> <br />
+            Ime:<br />
+            <input type="text" name="Ime" value="">
+            <br /> <br />
+            Prezime:<br />
+            <input type="text" name="Prezime" value="">
+            <br /> <br />
+            Korisnicko Ime:<br />
+            <input type="text" name="KorisnickoIme" value="undefined">
+            <br /> <br />
+            Password:
+            <br />
+            <input type="password" name="Lozinka" value="">
+            <br /> <br />
+
+            Password (ponovo):
+            <br />
+            <input type="password" name="Lozinka2" value="">
+            <br /> <br />
+
+            
+            Datum rodjenja:<br />
+            <input type="date" name="DatumRodjenja">
+            <br /> <br />
+            Status:<br />
+            <input type="radio" name="Status" value="Redovan">Redovan<br />
+            <input type="radio" name="Status" value="DL">DL
+            <br /><br />
+
+            Opcina prebivalista ID:<br />
+            <select id="OpstinaP" name="OpstinaPrebivalistaId">
+                <option>(Odaberite opštinu)</option>
+            </select>
+            <br /> <br />
+            Opcina rodjenja ID:<br />
+            <select id="OpstinaR" name="OpstinaRodjenjaId">
+                <option>(Odaberite opštinu)</option>
+            </select>
+
+            <br />
+            <br />
+            <input type="submit" value="Submit" id="submitId"> <br />
+        </form>
+    </body>
+
+
+    <script>
+
+        var url = 'https://wrdstudentformaplikacija2.azurewebsites.net/Home/OpstinaGetAllJson';
+
+        getPoziv(url, function (x){
+            var podaciObj = JSON.parse(x);
+
+            for (var i = 0; i < podaciObj.length; i++) {
+                var e = podaciObj[i];
+                document.getElementById("OpstinaP").innerHTML += "<option value='" + e.id + "'>" +e.opis +  "</option>";
+                document.getElementById("OpstinaR").innerHTML += "<option value='" + e.id + "'>" +e.opis +  "</option>";
+            }
+        });
+
+        function getPoziv(mojUrl, pokFunk) {
+            var zahtjev = new XMLHttpRequest();
+        
+            zahtjev.onload  = function() { 
+                    if (zahtjev.status === 200)   {  
+                        pokFunk(zahtjev.responseText)  
+                    }
+                    else  {  
+                        alert("Server javlja grešku: " + req.statusText);  
+                    }  
+            }
+
+            zahtjev.onerror = function() {
+                alert("Greška u komunikaciji sa serverom.");  
+            };
+
+            zahtjev.open("GET", mojUrl, true);
+            zahtjev.send(null);
+    }
+
+
+ function  ProvjeraBrojIndeksa()
+{ 
+    var x = document.getElementById("BrojIndeksa").value;
+       
+       if (/I[B|M]\d{6}/.test(x) == false)
+       {
+        document.getElementById("BrojIndeksaMessage").innerText = "Greška";
+        document.getElementById("submitId").disabled = true;
+       }
+       else{
+        document.getElementById("BrojIndeksaMessage").innerText = "";
+        document.getElementById("submitId").disabled = false;
+       }
+
+}
+   
+
+    </script>
+
+    </html>

@@ -1,0 +1,275 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Predavanje_28_30</title>
+    <script type="text/javascript" src="mojSkript.js"></script>
+    <script src="external/jquery/jquery.js"></script>
+    <script src="jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="stilovi.css" />
+    <link rel="stylesheet" href="jquery-ui.css" />
+  </head>
+  <body>
+    <div class="sadrzaj">
+      <div class="lijevi">
+        <div class="lijeviUnitrasnji">
+          <h2>Konverter Valuta</h2>
+          <div class="lijeviSrednji">
+            <input type="text" id="valuta" /> Code valute <br />
+            <input type="text" id="indexrazmjene" /> Odnos sa Eur
+            <br />
+            <button name="snimi" value="snimi" onclick="snimiStorage()">
+              Snimi
+            </button>
+            <button name="get" value="get" onclick="citajStorage()">
+              Citaj
+            </button>
+            <br /><br />
+            <div id="accordion"></div>
+          </div>
+          <p style="color:red;">
+            Unesite najmanje dvije valute i njihove odnose sa EUR, da biste
+            mogli vrsiti konverziju
+          </p>
+          <div class="lijeviDonji">
+            <input
+              type="text"
+              name="valuta"
+              id="valutaI"
+              placeholder="CODE Izvorne valute"
+            />
+            <br />
+            <input
+              type="text"
+              name="indexrazmjene"
+              id="indexrazmjeneI"
+              placeholder="Iznos razmjene"
+            />
+            <br />
+            <input
+              type="text"
+              id="valutaD"
+              placeholder="CODE Destinacijske valute"
+            />
+            <br />
+            <br />
+            <button name="snimi" value="snimi" onclick="obracunaj()">
+              Konvertuj
+            </button>
+            <br />
+            <br />
+            <input type="text" id="indexrazmjeneO" /> Obračunati iznos
+          </div>
+        </div>
+      </div>
+      <div class="desni">
+        <div class="desniGornji">
+          <div class="firma1">
+            <br />
+            <p id="ispit">ISPIT</p>
+          </div>
+          <div class="izborSrednji">
+            <ul id="listaSrednja">
+              <li class="izborLinije"><a href="">Programiranje I</a></li>
+              <li class="izborLinije"><a href="">WRD</a></li>
+              <li class="izborLinije">
+                Klikni za jos
+                <ul id="listaUgn">
+                  <li class="izborLinijeUg"><a href="">Programiranje I</a></li>
+                  <li class="izborLinijeUg"><a href="">WRD</a></li>
+                  <li class="izborLinijeUg">PSR</li>
+                  <li class="izborLinijeUg">SP</li>
+                </ul>
+              </li>
+              <li class="izborLinije">SP</li>
+            </ul>
+          </div>
+        </div>
+        <div class="desniSrednji">
+          <div class=".desniSrednjiunutrasnji">
+            <form id="forma">
+              <center><h3>Prijavi se</h3></center>
+              <br /><br />
+              <hr />
+              <p>
+                <label for="username" id="labelusername"
+                  >Vaše ime i prezime</label
+                >
+                <input type="text" id="username" name="username" />
+              </p>
+
+              <p>
+                <label
+                  for="brindeksa"
+                  id="labelbrindeksa"
+                  style=" display:inline"
+                  >Indeks / Godina:</label
+                >
+                <input
+                  type="text"
+                  id="brindeksa"
+                  name="brindeksa"
+                  style=" width: 50px"
+                />
+                <input
+                  type="text"
+                  id="godinaupisa"
+                  name="godinaupisa"
+                  style=" width: 50px"
+                />
+              </p>
+
+              <label>Omiljena oblast:</label>
+              <select name="izbor">
+                <option>Programiranje</option>
+                <option>WRD</option>
+                <option>Baze podataka</option>
+                <option>SI</option>
+              </select>
+
+              <p>
+                <label for="email" id="labelemail"
+                  >Predložena email adresa</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  onclick="kreirajMail()"
+                />
+              </p>
+              <input type="submit" id="save" value="Prijavi se" onclick="" />
+            </form>
+          </div>
+        </div>
+        <div class="desniDonji">
+          <div class="firma">
+            <br />
+            <p>&copy;Copyright FIT Ispit 2018</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="jquery-validation-1.16.0\dist\jquery.validate.js"></script>
+  <script src="jquery-validation-1.16.0\dist\additional-methods.js"></script>
+
+  <script>
+    $("#accordion").accordion({
+      heightStyle: "content"
+    });
+    function dodajAcordion() {
+      var naziv = $("#valuta").val();
+      var eure = $("#indexrazmjene").val();
+      $("#accordion").append(
+        "<h3>" + naziv + "</h3><div>" + naziv + "-EUR " + eure + "</div>"
+      );
+      $("#accordion").accordion("refresh");
+    }
+
+    function kreirajMail() {
+      var user = document.getElementById("username").value;
+      var mail;
+      var ime, prezime, godina;
+      godina = document.getElementById("godinaupisa").value;
+      ime = user.substring(0, 2);
+      var spa = user.indexOf(" ");
+      prezime = user.substring(spa + 1, spa + 5);
+      mail = ime + "." + prezime + "-" + godina + "@edu.fit.ba";
+      document.getElementById("email").value = mail;
+    }
+
+    // var desni = document.getElementsByClassName("desni");
+
+    // var sirina = document.documentElement.clientWidth
+    // var visina = document.documentElement.clientHeight;
+    // for (let index = 0; index < desni.length; index++) {
+    //   desni[index].style.left = (sirina/2 - 50/2)+"px"+desni.style.marginLeft;
+    //   desni[index].style.top = (visina/2 - 50/2)+"px";
+    // }
+
+    function citajStorage() {
+      var ime = document.getElementById("valuta").value;
+      alert(localStorage.getItem(ime));
+    }
+    function snimiStorage() {
+      // var ime = document.getElementById("valuta").value;
+      // var index = $("#accordion h3").text().search(ime);
+      // alert($("#accordion h3").text());
+      // if($("#accordion h3").text().includes(ime)){
+      //    alert($("#accordion h3").text().substring(index, index + ime.length));
+      // }
+
+      localStorage.setItem(
+        document.getElementById("valuta").value,
+        document.getElementById("indexrazmjene").value
+      );
+      dodajAcordion();
+      document.getElementById("valuta").value = "";
+      document.getElementById("indexrazmjene").value = "";
+    }
+    var pozadina = document.getElementById("pozadina");
+    var dijalog = document.getElementsByClassName("dijalog");
+
+    function dijalogInfo() {
+      var sirinaDokumenta = document.documentElement.clientWidth;
+      var visinaDokumenta = document.documentElement.clientHeight;
+      for (let index = 0; index < dijalog.length; index++) {
+        dijalog[index].style.left = sirinaDokumenta / 2 - 150 + "px";
+        dijalog[index].style.top = visinaDokumenta / 2 - 100 + "px";
+        dijalog[index].style.display = "block";
+      }
+      pozadina.style.display = "block";
+    }
+
+    $.validator.addMethod(
+      "regex",
+      function(value, element, regexp) {
+        var check = false;
+        return this.optional(element) || regexp.test(value);
+      },
+      "Please check your input."
+    );
+
+    $("#forma").validate({
+      rules: {
+        username: {
+          regex: /[A-Z]{1}\w{2}/
+        },
+        godinaupisa: {
+          regex: /^[^A-Za-z]+$/ //samo brojevi
+        },
+        brindeksa: {
+          regex: /[A-Z]{2}[0-9]{6}/
+        }
+      },
+      messages: {
+        brindeksa: "Format AA123456",
+        username: "Prvo slovo veliko pa najmanje dva mala",
+        godinaupisa: "Samo brojevi"
+      }
+    });
+    function obracunaj() {
+      var prva = document.getElementById("valutaI").value;
+      var druga = document.getElementById("valutaD").value;
+      var vrijednost = document.getElementById("indexrazmjeneI").value;
+      var cijena1 = localStorage.getItem(prva);
+      var cijena2 = localStorage.getItem(druga);
+
+      var ukupno;
+      ukupno = (cijena1 * vrijednost) / cijena2;
+      document.getElementById("indexrazmjeneO").value = ukupno;
+    }
+
+    // <input type="text" name = "valutaI" id="valuta" placeholder="CODE Izvorne valute">  <br>
+    // <input type="text" name="indexrazmjeneI" id="indexrazmjene" placeholder="Iznos razmjene">
+    // <br>
+    // <input type="text" id="valutaD" placeholder="CODE Destinacijske valute"> <br>
+    // <br>
+    // <button name="snimi" value="snimi" onclick="obracunaj()">Konvertuj</button>
+    // <br>
+    // <br>
+    // <input type="text" id="indexrazmjeneO"> Obračunati iznos
+  </script>
+</html>

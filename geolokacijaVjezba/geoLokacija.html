@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    Koordinata x: <input id="x" value="43.3395487"><br>
+    Koordinata y: <input id="y" value="17.7862211"><br>
+    <button onclick="getPoziv()">Traži po koordinatama</button>
+    <br>
+    <br>
+
+    Grad: <input id="grad" ><br>
+    Temperatura: <input id="temp" ><br>
+    Pressure: <input id="pres" ><br>
+    Hum: <input id="hum" ><br>
+    Temp - min: <input id="min" ><br>
+    Temp - max: <input id="max" ><br>
+
+
+    <script>
+        var  la = document.getElementById("x").value; 
+
+         var lo= document.getElementById("y").value;
+
+    function getPoziv(mojUrl, pokFunk) {
+        var mojUrl = "http://api.openweathermap.org/data/2.5/forecast?lat=" + la + "&lon=" + lo + "&appid=917b026a997320574cd4315b9bf4c73a";
+            var zahtjev = new XMLHttpRequest();
+        
+            zahtjev.onload  = function() { 
+                    if (zahtjev.status === 200)   {  
+                        var n = JSON.parse(zahtjev.responseText);
+                var grad =  n.name;
+                var temp = n.main.temp;
+                var pess = n.main.pressure;
+                var hum = n.main.humidity;
+                var min = n.main.temp_min;
+                var max = n.main.temp_max;
+                document.getElementById("grad").value = grad;
+                document.getElementById("temp").value = temp - 273.5;
+                document.getElementById("pres").value = pess;
+                document.getElementById("hum").value = hum;
+                document.getElementById("min").value = min - 273.5;
+                document.getElementById("max").value = max  - 273.5; 
+                    }
+                    else  {  
+                        alert("Server javlja grešku: " + zahtjev.statusText);  
+                    }  
+            }
+
+            zahtjev.onerror = function() {
+                alert("Greška u komunikaciji sa serverom.");  
+            };
+
+            zahtjev.open("GET", mojUrl, true);
+            zahtjev.send(null);
+    }
+    
+    
+    
+    </script>
+</body>
+</html>
